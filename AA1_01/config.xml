@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<enemigos>
+  <enemigo>
+    <id>1</id>
+    <vitalidad>40</vitalidad>
+    <ataque>15</ataque>
+    <defensa>20</defensa>
+    <velocidad>5</velocidad>
+    <experiencia>100</experiencia>
+        <arma id="1">
+          <alcance>2</alcance>
+        </arma>
+        <arma id="2">
+          <alcance>25</alcance>
+        </arma>
+  </enemigo>
+
+  <enemigo>
+    <id>2</id>
+    <vitalidad>89</vitalidad>
+    <ataque>59</ataque>
+    <defensa>19</defensa>
+    <velocidad>59</velocidad>
+    <experiencia>109</experiencia>
+      <arma id="3">
+        <alcance>36</alcance>
+      </arma>
+      <arma id="4">
+        <alcance>20</alcance>
+      </arma>
+  </enemigo>
+
+  <enemigo>
+    <id>3</id>
+    <vitalidad>75</vitalidad>
+    <ataque>12</ataque>
+    <defensa>78</defensa>
+    <velocidad>52</velocidad>
+    <experiencia>125</experiencia>
+      <arma id="5">
+        <alcance>50</alcance>
+      </arma>
+      <arma id="6">
+        <alcance>5</alcance>
+      </arma>
+  </enemigo>
+
+  <enemigo>
+    <id>4</id>
+    <vitalidad>100</vitalidad>
+    <ataque>2</ataque>
+    <defensa>90</defensa>
+    <velocidad>50</velocidad>
+    <experiencia>2</experiencia>
+      <arma id="7">
+        <alcance>20</alcance>
+      </arma>
+      <arma id="8">
+        <alcance>95</alcance>
+      </arma>
+  </enemigo>
+</enemigos>
+
