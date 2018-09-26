@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <exception>
 #include <iostream>
 #include <string>
@@ -45,15 +46,39 @@ int main(int argc, char *argv[]) {
 		Init(window, renderer);
 
 		//CARGAMOS IMAGEN
-		IMG_Init(IMG_INIT_JPG);
 		SDL_Surface * image = IMG_Load("../../res/background.jpg");
 		SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, image);
 
 		//MOUSE EN EL CENTRO DE LA PANTALLA
-		SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		//SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
-		//BOTONES
-		SDL_Rect box;
+		//BOTON PLAY
+		TTF_Init();
+		TTF_Font *font{ TTF_OpenFont("../../res/opensans.ttf", 255) };
+		SDL_Surface *tmpSurfPlay{ TTF_RenderText_Blended(font,"Play", SDL_Color{ 0,0,0,0 }) };
+		SDL_Texture *textTexturePlay{ SDL_CreateTextureFromSurface(renderer,tmpSurfPlay) };
+
+		//BOTON SOUNDOFF
+		SDL_Surface *tmpSurfSound{ TTF_RenderText_Blended(font,"Sound Off", SDL_Color{ 0,0,0,0 }) };
+		SDL_Texture *textTextureSound{ SDL_CreateTextureFromSurface(renderer,tmpSurfSound) };
+
+		//BOTON EXTI
+		SDL_Surface *tmpSurfExit{ TTF_RenderText_Blended(font,"Exit", SDL_Color{ 0,0,0,0 }) };
+		SDL_Texture *textTextureExit{ SDL_CreateTextureFromSurface(renderer,tmpSurfExit) };
+		
+		//RECTANGULO DE COLOR PLAY
+		SDL_Rect textRectPlay{ 10, 10, 100, 50 };
+
+		//RECTANGULO DE COLOR SOUND OFF
+		SDL_Rect textRectSound{ 10, 110, 100, 50 };
+
+		////RECTANGULO DE COLOR EXIT
+		SDL_Rect textRectExit{ 10, 210, 100, 50 };
+
+		//LIBERAMOS
+		SDL_FreeSurface(tmpSurfPlay);
+		SDL_FreeSurface(tmpSurfSound);
+		SDL_FreeSurface(tmpSurfExit);
 
 		//EVENTOS
 		SDL_Event e;
@@ -71,11 +96,66 @@ int main(int argc, char *argv[]) {
 							break;
 						}
 						break;
+					case SDL_MOUSEMOTION:
+						int x; int y;
+						SDL_GetMouseState(&x, &y);
+
+						//ENCIMA DE PLAY
+						if(((x > 10) && (x < 110)))
+						{
+							if((y > 10) && (y < 60))
+							{
+								std::cout << "Play" << std::endl;
+							}
+						}
+
+						//ENCIMA DE SOUNDOFF
+						if (((x > 10) && (x < 110)))
+						{
+							if ((y > 110) && (y < 160))
+							{
+								std::cout << "Sound Off" << std::endl;
+							}
+						}
+
+						//ENCIMA DE EXIT
+						if (((x > 10) && (x < 110)))
+						{
+							if ((y > 210) && (y < 260))
+							{
+								std::cout << "Exit" << std::endl;
+							}
+						}
+						break;
+					case SDL_MOUSEBUTTONDOWN:
+						if (((x > 10) && (x < 110)))
+						{
+							if ((y > 210) && (y < 260))
+							{
+								quit = true;
+							}
+						}
+						break;
 				default:
 					break;
 				}
 			}
+			//BACKGROUND
 			SDL_RenderCopy(renderer, texture, NULL, NULL);
+
+			//RECTANGULO
+			SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+			SDL_RenderFillRect(renderer, &textRectPlay);
+			SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+			SDL_RenderFillRect(renderer, &textRectSound);
+			SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+			SDL_RenderFillRect(renderer, &textRectExit);
+
+			//TEXT
+			SDL_RenderCopy(renderer, textTexturePlay, nullptr, &textRectPlay);
+			SDL_RenderCopy(renderer, textTextureSound, nullptr, &textRectSound);
+			SDL_RenderCopy(renderer, textTextureExit, nullptr, &textRectExit);
+
 			SDL_RenderPresent(renderer);
 		}
 		Close(window, renderer);
