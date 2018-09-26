@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <exception>
 #include <iostream>
 #include <string>
@@ -42,15 +43,21 @@ int main(int argc, char *argv[]) {
 
 		//VARIABLES NUEVAS
 
+		
 		//INICIO DE PANTALLA
 		Init(window, renderer);
+
+		//SONIDO
+		Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+		Mix_Music *music = Mix_LoadMUS("../../res/music1.mp3");
+		Mix_PlayMusic(music, 1);
 
 		//CARGAMOS IMAGEN
 		SDL_Surface * image = IMG_Load("../../res/background.jpg");
 		SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, image);
 
 		//MOUSE EN EL CENTRO DE LA PANTALLA
-		//SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
 		//BOTON PLAY
 		TTF_Init();
@@ -114,7 +121,7 @@ int main(int argc, char *argv[]) {
 						{
 							if ((y > 110) && (y < 160))
 							{
-								std::cout << "Sound Off" << std::endl;
+								//std::cout << "Sound Off" << std::endl;
 							}
 						}
 
@@ -135,6 +142,30 @@ int main(int argc, char *argv[]) {
 								quit = true;
 							}
 						}
+
+						if (((x > 10) && (x < 110)))
+						{
+							if ((y > 110) && (y < 160))
+							{
+								//If music is being played
+								if(Mix_PlayingMusic() == 1)
+								{
+									//If the music is paused
+									if (Mix_PausedMusic() == 1)
+									{
+										//Resume the music
+										Mix_ResumeMusic();
+									}
+									//If the music is playing
+									else
+									{
+										//Pause the music
+										Mix_PauseMusic();
+									}
+								}
+							}
+						}
+
 						break;
 				default:
 					break;
