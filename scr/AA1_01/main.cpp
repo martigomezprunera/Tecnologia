@@ -2,10 +2,10 @@
 #include <vector>
 #include <string>
 #include <sstream>
-#include "..\dep\inc\xml\rapidxml.hpp"
-#include "..\dep\inc\xml\rapidxml_utils.hpp"
-#include "..\dep\inc\xml\rapidxml_iterators.hpp"
-#include "..\dep\inc\xml\rapidxml_print.hpp"
+#include "..\..\dep\inc\xml\rapidxml.hpp"
+#include "..\..\dep\inc\xml\rapidxml_utils.hpp"
+#include "..\..\dep\inc\xml\rapidxml_iterators.hpp"
+#include "..\..\dep\inc\xml\rapidxml_print.hpp"
 
 //TIPO DE ARMA
 class Weapon
