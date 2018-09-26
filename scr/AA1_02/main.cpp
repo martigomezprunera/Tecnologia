@@ -1,12 +1,14 @@
 #include <SDL.h>
+#include <SDL_image.h>
 #include <exception>
 #include <iostream>
 #include <string>
+#include <map>
 
 #define ASSERT(cnd, msg) if (cnd) throw std::exception(&(msg)[0]);
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 400
+#define SCREEN_HEIGHT 400
 
 void Init(SDL_Window* &window, SDL_Renderer* &renderer) {
 	ASSERT(SDL_Init(SDL_INIT_VIDEO) < 0, "SDL could not initialize!");
@@ -30,20 +32,50 @@ int main(int argc, char *argv[]) {
 
 
 	try {
+		//KEYBOARD
+		std::map<int, bool> keyboard;
+
+		//VARIABLES DE WINDOW Y RENDERER
 		SDL_Window* window = nullptr;
 		SDL_Renderer* renderer = nullptr;
+
+		//VARIABLES NUEVAS
+
+		//INICIO DE PANTALLA
 		Init(window, renderer);
+
+		//CARGAMOS IMAGEN
+		IMG_Init(IMG_INIT_JPG);
+		SDL_Surface * image = IMG_Load("../../res/background.jpg");
+		SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, image);
+
+		//MOUSE EN EL CENTRO DE LA PANTALLA
+		SDL_WarpMouseInWindow(window, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+
+		//BOTONES
+		SDL_Rect box;
+
+		//EVENTOS
 		SDL_Event e;
 		bool quit = false;
-		SDL_Color newColor{ 0,0,0 }, prevColor{ 0,0,0 };
-		float percent = 0.0f;
-		auto lerp = [](float v0, float v1, float t) { return (1 - t)*v0 + t * v1; };
 		while (!quit) {
-			if (!SDL_PollEvent(&e)) if (e.type == SDL_QUIT) quit = true;
-			SDL_RenderClear(renderer);
-			(percent > 1.0f) ? (prevColor = newColor, newColor = { Uint8(rand() % 0xFF), Uint8(rand() % 0xFF), Uint8(rand() % 0xFF) }, percent = 0.0f)
-				: percent += .0002f;
-			SDL_SetRenderDrawColor(renderer, lerp(prevColor.r, newColor.r, percent), lerp(prevColor.g, newColor.g, percent), lerp(prevColor.b, newColor.b, percent), 0xFF);
+			//INIT CODE
+			if (!SDL_PollEvent(&e)) {
+				switch (e.type)
+				{
+					case SDL_KEYDOWN:
+						switch (e.key.keysym.sym)
+						{
+						case SDLK_ESCAPE:  
+							quit = true;
+							break;
+						}
+						break;
+				default:
+					break;
+				}
+			}
+			SDL_RenderCopy(renderer, texture, NULL, NULL);
 			SDL_RenderPresent(renderer);
 		}
 		Close(window, renderer);
