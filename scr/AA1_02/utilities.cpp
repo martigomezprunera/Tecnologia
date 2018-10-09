@@ -1,5 +1,6 @@
 #include "SDL.h"
 #include "utilities.h"
+#include "time.h"
 
 bool utilities::hover(int xMouse, int yMouse, SDL_Rect rect)
 {
@@ -19,3 +20,25 @@ bool utilities::hover(int xMouse, int yMouse, SDL_Rect rect)
 		return false;
 	}
 }
+
+bool utilities::colision(SDL_Rect sprite, SDL_Rect rect)
+{
+	if (hover(sprite.x, sprite.y, rect))
+	{
+		return true;
+	}
+	if (hover((sprite.x + sprite.w), (sprite.y), rect))
+	{
+		return true;
+	}
+	if (hover((sprite.x), (sprite.y + sprite.h), rect))
+	{
+		return true;
+	}
+	if (hover((sprite.x + sprite.w), (sprite.y + sprite.h), rect))
+	{
+		return true;
+	}
+	return false;
+}
+
