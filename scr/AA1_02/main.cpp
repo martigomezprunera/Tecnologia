@@ -492,84 +492,83 @@ int main(int, char*[])
 		//EVENTOS POR PULSAR TECLADO DE LOS PLAYERS
 		//PLAYER 1
 		switch (mov1)
-		{
-		case MovementsPlayer1::top:
-			if (!utilities::colision(spritePosition, RectTop))
 			{
-					spriteRect.y = frameHeight * 3;
-					frameTime++;
-					if (FPS / frameTime <= 2)
+			case MovementsPlayer1::top:
+					if (!utilities::colision(spritePosition, RectTop))
 					{
-						frameTime = 0;
-						spriteRect.x += frameWidth;
-						if (spriteRect.x >= (frameWidth * 3))
+						spriteRect.y = frameHeight * 3;
+						frameTime++;
+						if (FPS / frameTime <= 2)
 						{
-							spriteRect.x = 0;
+							frameTime = 0;
+							spriteRect.x += frameWidth;
+							if (spriteRect.x >= (frameWidth * 3))
+							{
+								spriteRect.x = 0;
+							}
 						}
+						spritePosition.y--;
 					}
-					spritePosition.y--;
-			}
-			break;
-		case MovementsPlayer1::down:
-			if (spritePosition.y < SCREEN_HEIGHT - spritePosition.h)
-			{
-					spriteRect.y = 0;
-					frameTime++;
-					if (FPS / frameTime <= 2)
+				break;
+			case MovementsPlayer1::down:
+					if (spritePosition.y < SCREEN_HEIGHT - spritePosition.h)
 					{
-						frameTime = 0;
-						spriteRect.x += frameWidth;
-						if (spriteRect.x >= (frameWidth * 3))
+						spriteRect.y = 0;
+						frameTime++;
+						if (FPS / frameTime <= 2)
 						{
-							spriteRect.x = 0;
+							frameTime = 0;
+							spriteRect.x += frameWidth;
+							if (spriteRect.x >= (frameWidth * 3))
+							{
+								spriteRect.x = 0;
+							}
 						}
+						spritePosition.y++;
 					}
-					spritePosition.y++;
-			}
-			break;
-		case MovementsPlayer1::left:
-			if (spritePosition.x > 0)
-			{
-					spriteRect.y = frameHeight;
-					frameTime++;
-					if (FPS / frameTime <= 2)
+				break;
+			case MovementsPlayer1::left:
+					if (spritePosition.x > 0)
 					{
-						frameTime = 0;
-						spriteRect.x += frameWidth;
-						if (spriteRect.x >= (frameWidth * 3))
+						spriteRect.y = frameHeight;
+						frameTime++;
+						if (FPS / frameTime <= 2)
 						{
-							spriteRect.x = 0;
+							frameTime = 0;
+							spriteRect.x += frameWidth;
+							if (spriteRect.x >= (frameWidth * 3))
+							{
+								spriteRect.x = 0;
+							}
 						}
+						spritePosition.x--;
 					}
-					spritePosition.x--;
-			}
-			break;
-		case MovementsPlayer1::right:
-			if (spritePosition.x < SCREEN_WIDTH - spritePosition.w)
-			{
-					spriteRect.y = frameHeight * 2;
-					frameTime++;
-					if (FPS / frameTime <= 2)
+				break;
+			case MovementsPlayer1::right:
+					if (spritePosition.x < SCREEN_WIDTH - spritePosition.w)
 					{
-						frameTime = 0;
-						spriteRect.x += frameWidth;
-						if (spriteRect.x >= (frameWidth * 3))
+						spriteRect.y = frameHeight * 2;
+						frameTime++;
+						if (FPS / frameTime <= 2)
 						{
-							spriteRect.x = 0;
+							frameTime = 0;
+							spriteRect.x += frameWidth;
+							if (spriteRect.x >= (frameWidth * 3))
+							{
+								spriteRect.x = 0;
+							}
 						}
+						spritePosition.x++;
 					}
-					spritePosition.x++;
+				break;
+			default:
+				break;
 			}
-			break;
-		default:
-			break;
-		}
 
 		//PLAYER 2
 		switch (mov2)
 		{
 		case MovementsPlayer2::top:
-			if (!utilities::colision(spritePosition1, RectTop)) {
 				spriteRect1.y = frameHeight * 7;
 				frameTime++;
 				if (FPS / frameTime <= 2)
@@ -582,7 +581,6 @@ int main(int, char*[])
 					}
 				}
 				spritePosition1.y--;
-			}
 			break;
 		case MovementsPlayer2::down:
 			if (spritePosition1.y < SCREEN_HEIGHT - spritePosition1.h)
@@ -642,7 +640,6 @@ int main(int, char*[])
 		//COLISION MONEDA PLAYER 1
 		if (utilities::colision(spritePosition, textRectMoney))
 		{
-			//std::cout << "Hola 1" << std::endl;
 			//RESETAMOS RECT DE MONEY
 			textRectMoney = { (rand() % (SCREEN_WIDTH - 50)) , (rand() % (SCREEN_HEIGHT - 250)) + 200, 50, 50 };
 
@@ -654,7 +651,6 @@ int main(int, char*[])
 		//COLISION MONEDA PLAYER 2
 		if (utilities::colision(spritePosition1, textRectMoney))
 		{
-			//std::cout << "Hola 2" << std::endl;
 			//RESETAMOS RECT DE MONEY
 			textRectMoney = { (rand() % (SCREEN_WIDTH - 50)) , (rand() % (SCREEN_HEIGHT - 250)) + 200, 50, 50 };
 
@@ -706,7 +702,7 @@ int main(int, char*[])
 		if (auxTimeDown == 0)
 		{
 			changeEscene = false;
-			seconds = 60;
+			timeDown = 60;
 			score1 = 0;
 			score2 = 0;
 		}
@@ -715,11 +711,17 @@ int main(int, char*[])
 		if (score1 == 9)
 		{
 			changeEscene = false;
+			timeDown = 60;
+			score1 = 0;
+			score2 = 0;
 		}
 
 		if (score2 == 9)
 		{
 			changeEscene = false;
+			timeDown = 60;
+			score1 = 0;
+			score2 = 0;
 		}
 
 		//FRAME ESTABLES
