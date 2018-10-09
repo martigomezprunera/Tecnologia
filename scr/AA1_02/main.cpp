@@ -33,6 +33,8 @@ int main(int, char*[])
 	int min = 0;
 	int seconds = 60;
 	int auxTimeFrame = 0;
+	int centesimas = 0;
+	int decimas = 0;
 
 	//RANDOM
 	srand(time(NULL));
@@ -59,6 +61,10 @@ int main(int, char*[])
 	TTF_Init();
 	TTF_Font *font{ TTF_OpenFont("../../res/ttf/saiyan.ttf", 255) };
 	if (font == nullptr) throw "No es pot inicializtar the TTF_Font";
+
+	//FUENTE
+	TTF_Font *font2{ TTF_OpenFont("../../res/ttf/arial.ttf", 255) };
+	if (font2 == nullptr) throw "No es pot inicializtar the TTF_Font2";
 
 	//-->SDL_Mix
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
@@ -102,10 +108,6 @@ int main(int, char*[])
 
 		//RECTANGULO DINERO
 		SDL_Rect textRectMoney{ (rand() % (SCREEN_WIDTH - 50)) , (rand() % (SCREEN_HEIGHT - 250)) + 200, 50, 50 };
-
-		//TIEMPO
-		SDL_Rect textRectTimeMIN{ (SCREEN_WIDTH / 2), 10, 200, 50 };
-		SDL_Rect textRectTimeSECONDS{ (SCREEN_WIDTH / 2), 80, 200, 50 };
 
 		//RECTANGULO SUPERIOR
 		SDL_Rect RectTop{ 0 , 0, SCREEN_WIDTH, 200};
@@ -167,6 +169,27 @@ int main(int, char*[])
 	scorePosition1.w = scoreRect1.w = frameWidthScore;
 	SDL_Texture *scoreAux1 = scoreTexture;
 
+	//TIME Seconds1
+	SDL_Rect timeRect, timePosition;
+	SDL_QueryTexture(scoreTexture, NULL, NULL, &textwidthScore, &textheightScore);
+	timePosition.x = 700;
+	timePosition.y = 100;
+	timeRect.x = 0;
+	timeRect.y = 0;
+	timePosition.h = timeRect.h = frameHeightScore;
+	timePosition.w = timeRect.w = frameWidthScore;
+	SDL_Texture *timeAux = scoreTexture;
+
+	//TIME Seconds2
+	SDL_Rect timeRect1, timePosition1;
+	SDL_QueryTexture(scoreTexture, NULL, NULL, &textwidthScore, &textheightScore);
+	timePosition1.x = 625;
+	timePosition1.y = 100;
+	timeRect1.x = frameHeightScore * 6;
+	timeRect1.y = 0;
+	timePosition1.h = timeRect1.h = frameHeightScore;
+	timePosition1.w = timeRect1.w = frameWidthScore;
+	SDL_Texture *timeAux1 = scoreTexture;
 
 	//TIME
 
@@ -227,9 +250,8 @@ int main(int, char*[])
 		SDL_Texture *textTextureScore2{ SDL_CreateTextureFromSurface(m_renderer,tmpSurfPlay) };
 		SDL_Texture *textTextureScore2Aux = textTextureScore2;
 		SDL_FreeSurface(tmpSurfPlay);
-
-
-		TTF_CloseFont(font);
+		
+		TTF_CloseFont(font2);
 
 	// --- AUDIO ---
 	Mix_PlayMusic(music, -1);
@@ -474,69 +496,69 @@ int main(int, char*[])
 		case MovementsPlayer1::top:
 			if (!utilities::colision(spritePosition, RectTop))
 			{
-				spriteRect.y = frameHeight * 3;
-				frameTime++;
-				if (FPS / frameTime <= 2)
-				{
-					frameTime = 0;
-					spriteRect.x += frameWidth;
-					if (spriteRect.x >= (frameWidth * 3))
+					spriteRect.y = frameHeight * 3;
+					frameTime++;
+					if (FPS / frameTime <= 2)
 					{
-						spriteRect.x = 0;
+						frameTime = 0;
+						spriteRect.x += frameWidth;
+						if (spriteRect.x >= (frameWidth * 3))
+						{
+							spriteRect.x = 0;
+						}
 					}
-				}
-				spritePosition.y--;
+					spritePosition.y--;
 			}
 			break;
 		case MovementsPlayer1::down:
 			if (spritePosition.y < SCREEN_HEIGHT - spritePosition.h)
 			{
-				spriteRect.y = 0;
-				frameTime++;
-				if (FPS / frameTime <= 2)
-				{
-					frameTime = 0;
-					spriteRect.x += frameWidth;
-					if (spriteRect.x >= (frameWidth * 3))
+					spriteRect.y = 0;
+					frameTime++;
+					if (FPS / frameTime <= 2)
 					{
-						spriteRect.x = 0;
+						frameTime = 0;
+						spriteRect.x += frameWidth;
+						if (spriteRect.x >= (frameWidth * 3))
+						{
+							spriteRect.x = 0;
+						}
 					}
-				}
-				spritePosition.y++;
+					spritePosition.y++;
 			}
 			break;
 		case MovementsPlayer1::left:
 			if (spritePosition.x > 0)
 			{
-				spriteRect.y = frameHeight;
-				frameTime++;
-				if (FPS / frameTime <= 2)
-				{
-					frameTime = 0;
-					spriteRect.x += frameWidth;
-					if (spriteRect.x >= (frameWidth * 3))
+					spriteRect.y = frameHeight;
+					frameTime++;
+					if (FPS / frameTime <= 2)
 					{
-						spriteRect.x = 0;
+						frameTime = 0;
+						spriteRect.x += frameWidth;
+						if (spriteRect.x >= (frameWidth * 3))
+						{
+							spriteRect.x = 0;
+						}
 					}
-				}
-				spritePosition.x--;
+					spritePosition.x--;
 			}
 			break;
 		case MovementsPlayer1::right:
 			if (spritePosition.x < SCREEN_WIDTH - spritePosition.w)
 			{
-				spriteRect.y = frameHeight * 2;
-				frameTime++;
-				if (FPS / frameTime <= 2)
-				{
-					frameTime = 0;
-					spriteRect.x += frameWidth;
-					if (spriteRect.x >= (frameWidth * 3))
+					spriteRect.y = frameHeight * 2;
+					frameTime++;
+					if (FPS / frameTime <= 2)
 					{
-						spriteRect.x = 0;
+						frameTime = 0;
+						spriteRect.x += frameWidth;
+						if (spriteRect.x >= (frameWidth * 3))
+						{
+							spriteRect.x = 0;
+						}
 					}
-				}
-				spritePosition.x++;
+					spritePosition.x++;
 			}
 			break;
 		default:
@@ -663,6 +685,10 @@ int main(int, char*[])
 
 			//MONEY
 			moneyTextPlayAux = moneyTexture;
+
+			//TIME
+			timeAux = scoreTexture;
+			timeAux1 = scoreTexture;
 		}
 		else
 		{
@@ -673,6 +699,27 @@ int main(int, char*[])
 			scoreAux = nullptr;
 			scoreAux1 = nullptr;
 			moneyTextPlayAux = nullptr;
+			timeAux = nullptr;
+			timeAux1 = nullptr;
+		}
+
+		if (auxTimeDown == 0)
+		{
+			changeEscene = false;
+			seconds = 60;
+			score1 = 0;
+			score2 = 0;
+		}
+
+		//GANAMOS
+		if (score1 == 9)
+		{
+			changeEscene = false;
+		}
+
+		if (score2 == 9)
+		{
+			changeEscene = false;
 		}
 
 		//FRAME ESTABLES
@@ -681,6 +728,14 @@ int main(int, char*[])
 		{
 			SDL_Delay((int)(DELAY_TIME - frameTimeES));
 		}*/
+
+		//CENTESIMAS 
+		centesimas = auxTimeDown % 10;
+		timeRect.x = frameHeightScore * centesimas;
+		
+		//DECIMAS
+		decimas = auxTimeDown / 10;
+		timeRect1.x = frameHeightScore * decimas;
 
 		// DRAW
 		SDL_RenderClear(m_renderer);
@@ -706,6 +761,12 @@ int main(int, char*[])
 
 		//MONEY
 		SDL_RenderCopy(m_renderer, moneyTextPlayAux, nullptr, &textRectMoney);
+
+		//IMG TIME
+		//SECONDS
+		SDL_RenderCopy(m_renderer, timeAux, &timeRect, &timePosition);
+		SDL_RenderCopy(m_renderer, timeAux1, &timeRect1, &timePosition1);
+
 
 		SDL_RenderPresent(m_renderer);
 	}
