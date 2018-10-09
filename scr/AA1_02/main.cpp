@@ -620,7 +620,9 @@ int main(int, char*[])
 		//COLISION MONEDA PLAYER 1
 		if (utilities::colision(spritePosition, textRectMoney))
 		{
-			std::cout << "Hola 1" << std::endl;
+			//std::cout << "Hola 1" << std::endl;
+			//RESETAMOS RECT DE MONEY
+			textRectMoney = { (rand() % (SCREEN_WIDTH - 50)) , (rand() % (SCREEN_HEIGHT - 250)) + 200, 50, 50 };
 
 			//CAMBIAMOS SPRITE DE PUNTUACION DEL JUGADOR 1
 			score1++;
@@ -630,9 +632,12 @@ int main(int, char*[])
 		//COLISION MONEDA PLAYER 2
 		if (utilities::colision(spritePosition1, textRectMoney))
 		{
-			std::cout << "Hola 2" << std::endl;
+			//std::cout << "Hola 2" << std::endl;
+			//RESETAMOS RECT DE MONEY
+			textRectMoney = { (rand() % (SCREEN_WIDTH - 50)) , (rand() % (SCREEN_HEIGHT - 250)) + 200, 50, 50 };
 
 			//CAMBIAMOS SPRITE DE PUNTUACION DEL JUGADOR 2
+			score2++;
 			scoreRect1.x = frameHeightScore * score2;
 
 		}
